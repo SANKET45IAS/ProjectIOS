@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Light</title>
+    <style>
+        body {
+            background-color: aqua;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .main {
+            width: 100px;
+            height: 300px;
+            background-color: black;
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .traffic-light {
+            height: 60px;
+            width: 60px;
+            border-radius: 50%;
+            margin: 5px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            background-color: gray; /* Default inactive color */
+        }
+        .active {
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="traffic-light red active"></div>
+        <div class="traffic-light yellow"></div>
+        <div class="traffic-light green"></div>
+    </div>
+    <script>
+        let lights = document.getElementsByClassName("traffic-light");
+
+        function changeLight() {
+            setTimeout(() => {
+                lights[0].style.background = "red";
+                lights[1].style.background = "gray";
+                lights[2].style.background = "gray";
+            }, 0);
+
+            setTimeout(() => {
+                lights[0].style.background = "gray";
+                lights[1].style.background = "yellow";
+                lights[2].style.background = "gray";
+            }, 2000);
+
+            setTimeout(() => {
+                lights[0].style.background = "gray";
+                lights[1].style.background = "gray";
+                lights[2].style.background = "green";
+            }, 4000);
+
+            setTimeout(() => {
+                changeLight();
+            }, 6000);
+        }
+
+        changeLight(); // Start the light cycle
+    </script>
+</body>
+</html>

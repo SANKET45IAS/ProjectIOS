@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech to Text Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            flex-direction: column;
+        }
+        textarea {
+            width: 80%;
+            height: 200px;
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <h2>Speech to Text Converter</h2>
+    <button id="start-btn">Start Listening</button>
+    <textarea id="output" placeholder="Your speech will appear here..." readonly></textarea>
+    
+    <script>
+        const startBtn = document.getElementById("start-btn");
+        const output = document.getElementById("output");
+        
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        
+        recognition.continuous = false;
+        recognition.lang = "en-US";
+        recognition.interimResults = false;
+        
+        recognition.onstart = () => {
+            startBtn.textContent = "Listening...";
+            startBtn.disabled = true;
+        };
+        
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            output.value += transcript + "\n";
+        };
+        
+        recognition.onend = () => {
+            startBtn.textContent = "Start Listening";
+            startBtn.disabled = false;
+        };
+        
+        recognition.onerror = (event) => {
+            alert("Error occurred: " + event.error);
+            startBtn.disabled = false;
+        };
+        
+        startBtn.addEventListener("click", () => {
+            output.value = "";
+            recognition.start();
+        });
+
+
+        
+    </script>
+</body>
+</html>
